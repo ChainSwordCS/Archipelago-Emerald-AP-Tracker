@@ -14,18 +14,18 @@ LEGENDARY_ID = ""
 OBTAINED_ITEMS = {}
 
 function resetItems()
-	for _, value in pairs(ITEM_MAPPING) do
-		if value[1] then
-			local object = Tracker:FindObjectForCode(value[1])
-			if object then
-				object.Active = false
-			end
+  for _, value in pairs(ITEM_MAPPING) do
+    if value[1] then
+      local object = Tracker:FindObjectForCode(value[1])
+      if object then
+        object.Active = false
+      end
       object = Tracker:FindObjectForCode(value[1].."_hosted")
       if object then
         object.Active = false
       end
-		end
-	end
+    end
+  end
 end
 
 function resetLocations()
@@ -44,17 +44,17 @@ function resetLocations()
 end
 
 function onClear(slot_data)
-	PLAYER_NUMBER = Archipelago.PlayerNumber or -1
-	TEAM_NUMBER = Archipelago.TeamNumber or 0
-	CUR_INDEX = -1
+  PLAYER_NUMBER = Archipelago.PlayerNumber or -1
+  TEAM_NUMBER = Archipelago.TeamNumber or 0
+  CUR_INDEX = -1
   OBTAINED_ITEMS = {}
-	resetItems()
-	resetLocations()
+  resetItems()
+  resetLocations()
   if AUTOTRACKER_ENABLE_DEBUG_LOGGING_AP then
     print(dump_table(slot_data))
   end
-	for key, value in pairs(slot_data) do
-	  if key == "hm_requirements" then
+  for key, value in pairs(slot_data) do
+    if key == "hm_requirements" then
       for hm, req in pairs(slot_data['hm_requirements']) do
         if hm == "HM02 Fly" then
           if type(req) ~= "table" then
@@ -64,54 +64,54 @@ function onClear(slot_data)
           end
         end
       end
-	  elseif key == "remove_roadblocks" then
+    elseif key == "remove_roadblocks" then
       for roadblock, code in pairs(ROADBLOCKS) do
         Tracker:FindObjectForCode(code).CurrentStage = tableContains(slot_data['remove_roadblocks'], roadblock) and 1 or 0
       end
-	  elseif key == "allowed_legendary_hunt_encounters" then
+    elseif key == "allowed_legendary_hunt_encounters" then
       LEGENDARIES_ALLOWED = slot_data['allowed_legendary_hunt_encounters']
-	  elseif SLOT_CODES[key] then
-		  Tracker:FindObjectForCode(SLOT_CODES[key].code).CurrentStage = SLOT_CODES[key].mapping[value]
-	  end
-	end
-	if PLAYER_NUMBER > -1 then
-	  updateEvents(0)
+    elseif SLOT_CODES[key] then
+      Tracker:FindObjectForCode(SLOT_CODES[key].code).CurrentStage = SLOT_CODES[key].mapping[value]
+    end
+  end
+  if PLAYER_NUMBER > -1 then
+    updateEvents(0)
     updateKeyItems(0)
-	  updateLegendaries(0)
-	  EVENT_ID = "pokemon_emerald_events_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
-	  KEY_ITEMS_ID = "pokemon_emerald_keys_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
-	  LEGENDARY_ID = "pokemon_emerald_legendaries_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
-	  Archipelago:SetNotify({EVENT_ID})
-	  Archipelago:Get({EVENT_ID})
-	  Archipelago:SetNotify({KEY_ITEMS_ID})
-	  Archipelago:Get({KEY_ITEMS_ID})
-	  Archipelago:SetNotify({LEGENDARY_ID})
-	  Archipelago:Get({LEGENDARY_ID})
-	end
+    updateLegendaries(0)
+    EVENT_ID = "pokemon_emerald_events_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
+    KEY_ITEMS_ID = "pokemon_emerald_keys_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
+    LEGENDARY_ID = "pokemon_emerald_legendaries_"..TEAM_NUMBER.."_"..PLAYER_NUMBER
+    Archipelago:SetNotify({EVENT_ID})
+    Archipelago:Get({EVENT_ID})
+    Archipelago:SetNotify({KEY_ITEMS_ID})
+    Archipelago:Get({KEY_ITEMS_ID})
+    Archipelago:SetNotify({LEGENDARY_ID})
+    Archipelago:Get({LEGENDARY_ID})
+  end
 end
 
 function onItem(index, item_id, item_name, player_number)
-	if index <= CUR_INDEX then
-		return
-	end
-	CUR_INDEX = index;
-	local value = ITEM_MAPPING[item_id]
-	if not value then
-		return
-	end
+  if index <= CUR_INDEX then
+    return
+  end
+  CUR_INDEX = index;
+  local value = ITEM_MAPPING[item_id]
+  if not value then
+    return
+  end
   if not value[1] then
     if AUTOTRACKER_ENABLE_DEBUG_LOGGING_AP then
       print(string.format("onItem: could not find code for id %s", item_id))
     end
     return
   end
-	local object = Tracker:FindObjectForCode(value[1].."_hosted")
-	if object then
-		object.Active = true
+  local object = Tracker:FindObjectForCode(value[1].."_hosted")
+  if object then
+    object.Active = true
     table.insert(OBTAINED_ITEMS, value[1])
   elseif AUTOTRACKER_ENABLE_DEBUG_LOGGING_AP then
-		print(string.format("onItem: could not find object for code %s", v[1]))
-	end
+    print(string.format("onItem: could not find object for code %s", v[1]))
+  end
 end
 
 function onLocation(location_id, location_name)
@@ -137,25 +137,25 @@ function onLocation(location_id, location_name)
 end
 
 function onNotify(key, value, old_value)
-	if value ~= old_value then
-		if key == EVENT_ID then
-		  updateEvents(value)
-		elseif key == KEY_ITEMS_ID then
-		  updateKeyItems(value)
-		elseif key == LEGENDARY_ID then
-		  updateLegendaries(value)
-		end
-	end
+  if value ~= old_value then
+    if key == EVENT_ID then
+      updateEvents(value)
+    elseif key == KEY_ITEMS_ID then
+      updateKeyItems(value)
+    elseif key == LEGENDARY_ID then
+      updateLegendaries(value)
+    end
+  end
 end
 
 function onNotifyLaunch(key, value)
-	if key == EVENT_ID then
-		updateEvents(value)
-	elseif key == KEY_ITEMS_ID then
-		updateKeyItems(value)
-	elseif key == LEGENDARY_ID then
-		updateLegendaries(value)
-	end
+  if key == EVENT_ID then
+    updateEvents(value)
+  elseif key == KEY_ITEMS_ID then
+    updateKeyItems(value)
+  elseif key == LEGENDARY_ID then
+    updateLegendaries(value)
+  end
 end
 
 function updateEvents(value)
