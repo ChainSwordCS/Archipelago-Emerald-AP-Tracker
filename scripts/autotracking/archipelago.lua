@@ -2,6 +2,7 @@ ScriptHost:LoadScript("scripts/autotracking/flag_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/item_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/location_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/setting_mapping.lua")
+ScriptHost:LoadScript("scripts/autotracking/tab_mapping.lua")
 
 CUR_INDEX = -1
 PLAYER_ID = -1
@@ -242,6 +243,12 @@ function onBounce(json)
 end
 
 function updateMap(map_id)
+  local tabs = TAB_MAPPING[map_id]
+  if tabs then
+    for _, tab in ipairs(tabs) do
+      Tracker:UiHint("ActivateTab", tab)
+    end
+  end
 end
 
 function updateEncounter(species_id, slot, encounter_type, map_id)

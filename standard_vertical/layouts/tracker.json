@@ -52,20 +52,15 @@
 							"dock": "top",
 							"content": [
 									{
-											"title": "Hoenn",
-											"type": "tabbed",
-											"tabs": [
-											{
-												"title": "Hoenn",
-												"content": {
-												"type":"map",
-												"maps": ["hoennmap"]
-												}
-											}
-										]
+                      "title": "Hoenn",
+                      "type": "array",
+                      "content": {
+                      "type":"map",
+                      "maps": ["hoennmap"]
+                      }
 									},
 									{
-											"title": "Sub Areas",
+											"title": "Dungeons",
 											"type": "tabbed",
 											"tabs": [
 											{
@@ -104,14 +99,14 @@
 												}
 											},
 											{
-												"title": "Mt. Pyre Int",
+												"title": "Mt. Pyre Interior",
 												"content": {
 												"type":"map",
 												"maps": ["mtpyre_int"]
 												}
 											},
 											{
-												"title": "Mt Pyre Ext",
+												"title": "Mt. Pyre Exterior",
 												"content": {
 												"type":"map",
 												"maps": ["mtpyre_ext"]
@@ -186,8 +181,8 @@
 												"maps": ["rt128"]
 												}
 											},
-											{                      
-												"title": "Rt. 132-134",
+											{
+												"title": "Routes 132-134",
 												"content": {
 												"type":"map",
 												"maps": ["rt132_134"]

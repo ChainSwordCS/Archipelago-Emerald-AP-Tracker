@@ -51,22 +51,17 @@
 						  {
 							"type": "tabbed",
 							"dock": "top",
-							"content": [     
+							"content": [
 									{
 											"title": "Hoenn",
-											"type": "tabbed",
-											"tabs": [
-											{
-												"title": "Hoenn",
-												"content": {
-												"type":"map",
-												"maps": ["hoennmap"]
-												}
-											}
-										]                  
+											"type": "array",
+                      "content": {
+                      "type":"map",
+                      "maps": ["hoennmap"]
+                      }
 									},
 									{
-											"title": "Sub Areas",
+											"title": "Dungeons",
 											"type": "tabbed",
 											"tabs": [
 											{
@@ -97,22 +92,22 @@
 												"maps": ["abandonedship"]
 												}
 											},
-											{                      
+											{
 												"title": "Safari Zone",
 												"content": {
 												"type":"map",
 												"maps": ["safari"]
 												}
 											},
-											{                      
-												"title": "Mt. Pyre Int",
+											{
+												"title": "Mt. Pyre Interior",
 												"content": {
 												"type":"map",
 												"maps": ["mtpyre_int"]
 												}
 											},
 											{
-												"title": "Mt Pyre Ext",
+												"title": "Mt. Pyre Exterior",
 												"content": {
 												"type":"map",
 												"maps": ["mtpyre_ext"]
@@ -139,14 +134,14 @@
 												"maps": ["seafloorcavern"]
 												}
 											},
-											{                      
+											{
 												"title": "Victory Road",
 												"content": {
 												"type":"map",
 												"maps": ["victoryroad"]
 												}
 											},
-											{                      
+											{
 												"title": "Artisan Cave",
 												"content": {
 												"type":"map",
@@ -194,8 +189,8 @@
 												"maps": ["rt128"]
 												}
 											},
-											{                      
-												"title": "Rt. 132-134",
+											{
+												"title": "Routes 132-134",
 												"content": {
 												"type":"map",
 												"maps": ["rt132_134"]
@@ -216,10 +211,10 @@
 																"type": "array",
 																"content": [
 																{
-																	
+
 																	"type": "layout",
 																	"key": "pokedex_gen_1_grid_1"
-																	
+
 																},
 																{
 																	"type": "layout",
@@ -266,10 +261,10 @@
 																"type": "array",
 																"content": [
 																{
-																	
+
 																	"type": "layout",
 																	"key": "pokedex_gen_2_grid_1"
-																	
+
 																},
 																{
 																	"type": "layout",
@@ -343,7 +338,7 @@
 													}
 												]
 											},
-											{                      
+											{
 												"title": "Encounter Tracking",
 												"content": {
 												"type":"map",
@@ -372,7 +367,7 @@
 				"content": {
 				"type": "layout",
 				"key": "setting_grid"
-					}	
+					}
 				}
 			]
 		}
