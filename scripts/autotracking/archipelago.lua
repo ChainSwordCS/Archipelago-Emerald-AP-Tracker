@@ -230,8 +230,26 @@ function updateLegendaries(value, reset)
   end
 end
 
+function onBounce(json)
+  local data = json["data"]
+  if data then
+    if data["type"] == "MapUpdate" then
+      updateMap(data["mapId"])
+    elseif data["type"] == "Encounter" then
+      updateEncounter(data["species"], data["slot"], data["encounterType"], data["mapId"])
+    end
+  end
+end
+
+function updateMap(map_id)
+end
+
+function updateEncounter(species_id, slot, encounter_type, map_id)
+end
+
 Archipelago:AddClearHandler("clear handler", onClear)
 Archipelago:AddItemHandler("item handler", onItem)
 Archipelago:AddLocationHandler("location handler", onLocation)
 Archipelago:AddSetReplyHandler("notify handler", onNotify)
 Archipelago:AddRetrievedHandler("notify launch handler", onNotifyLaunch)
+Archipelago:AddBouncedHandler("bounce handler", onBounce)
