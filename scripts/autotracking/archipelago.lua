@@ -252,6 +252,15 @@ function updateMap(map_id)
 end
 
 function updateEncounter(species_id, slot, encounter_type, map_id)
+  local locations = ENCOUNTER_MAPPING[map_id][encounter_type][slot]
+  if locations then
+    for _, location in pairs(locations) do
+      local object = Tracker:FindObjectForCode(location)
+      if object then
+        object.AvailableChestCount = 0
+      end
+    end
+  end
 end
 
 Archipelago:AddClearHandler("clear handler", onClear)
