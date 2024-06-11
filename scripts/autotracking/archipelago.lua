@@ -1,6 +1,8 @@
+ScriptHost:LoadScript("scripts/autotracking/encounter_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/flag_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/item_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/location_mapping.lua")
+ScriptHost:LoadScript("scripts/autotracking/pokemon_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/setting_mapping.lua")
 ScriptHost:LoadScript("scripts/autotracking/tab_mapping.lua")
 
@@ -13,6 +15,8 @@ KEY_ITEMS_ID = ""
 LEGENDARY_ID = ""
 
 OBTAINED_ITEMS = {}
+
+UNCLEARED_ENCOUNTERS = {}
 
 function resetItems()
 	for _, value in pairs(ITEM_MAPPING) do
@@ -253,13 +257,17 @@ end
 
 function updateEncounter(species_id, slot, encounter_type, map_id)
   local locations = ENCOUNTER_MAPPING[map_id][encounter_type][slot]
-  if locations then
-    for _, location in pairs(locations) do
-      local object = Tracker:FindObjectForCode(location)
-      if object then
-        object.AvailableChestCount = 0
+  if has("pokedex_off") or has(POKEMON_MAPPING[species_id]) then
+    if locations then
+      for _, location in pairs(locations) do
+        local object = Tracker:FindObjectForCode(location)
+        if object then
+          object.AvailableChestCount = 0
+        end
       end
     end
+  else
+    table.insert(UNCLEARED_ENCOUNTERS, {species_id, slot, encounter_type, map_id})
   end
 end
 
